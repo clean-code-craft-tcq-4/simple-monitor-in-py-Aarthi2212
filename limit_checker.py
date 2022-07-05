@@ -1,9 +1,8 @@
-from tkinter.tix import MAX
-
 from logger import Logger
 class LimitChecker:
     def __init__(self) -> None:
         self.logger = Logger()
+        self.value = None
     
     def is_in_range(self, min, max):
         result = self.value < min or self.value < max

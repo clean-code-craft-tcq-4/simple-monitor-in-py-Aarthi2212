@@ -18,4 +18,4 @@ class Logger:
         if not result:
             print("{} is too low".format(parameter_name))
         else:
-            print("{} is in high limit".format(parameter_name))
+            print("{} is in low limit".format(parameter_name))
