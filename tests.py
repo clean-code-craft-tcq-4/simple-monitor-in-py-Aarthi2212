@@ -84,15 +84,11 @@ class Test:
     def test_language_support(self):
         language = Language()
         assert(language.set_language_preference(const.GERMAN) is True)
-        error = ""
-        try:
-            result = language.set_language_preference("Tamil")
-        except ValueError as e:
-            result = e
-            error = str(e)
+        assert(language.set_language_preference("Tamil") is False)
 
-        assert(isinstance(result, ValueError) == True)
-        assert(error == "Language not Supported")
+    def test_unit_conversion(self):
+        battery = Battery()
+        assert(battery.unit_conversion(100, const.FARENHEIT, const.CELSIUS) == 37.77777777777778)
     
     def test_different_language(self):
         for config in self.test_config:
@@ -113,4 +109,5 @@ class Test:
         self.test_is_in_high_range()
         self.test_is_in_low_range()
         self.test_language_support()
+        self.test_unit_conversion()
         self.test_different_language()

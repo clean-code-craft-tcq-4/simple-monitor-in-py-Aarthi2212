@@ -10,11 +10,15 @@ class Battery:
 
     def set_attribute(self, name, value):
         self.__setattr__(name, value)
+
+    def get_converted_value(self, conversion, value, actual_unit, expected_unit):
+        if conversion.get("From") == actual_unit and conversion.get("To") == expected_unit:
+            value = eval(conversion.get("Formula").format(value))
+        return value
     
     def unit_conversion(self, value, actual_unit, expected_unit):
         for conversion in const.UNIT_CONVERSIONS:
-            if conversion.get("From") == actual_unit and conversion.get("To") == expected_unit:
-                value = eval(conversion.get("Formula").format(value))
+            value = self.get_converted_value(conversion, value, actual_unit, expected_unit)
         return value
 
     def is_temperature_ok(self):
@@ -22,7 +26,7 @@ class Battery:
         value = temperature.get("value")
         actual_unit = temperature.get("unit")
         expected_unit = const.CELSIUS
-        if actual_unit != expected_unit and actual_unit != None:
+        if not actual_unit in [expected_unit, None]:
             value = self.unit_conversion(value, actual_unit, expected_unit)
         return self.checker.check_param(value, const.TEMPERATURE, const.MIN_TEMP, const.MAX_TEMP)
 
